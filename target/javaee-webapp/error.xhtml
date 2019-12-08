@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1>Error during Login!</h1>
+		<h1 style="color: red">
+			<h:messages />
+		</h1>
+
+		<div>
+			<ui:param name="id" value="381">
+				<f:converter converterId="javax.faces.Long" />
+			</ui:param>
+		</div>
+
+		<div>
+		<h:form>
+			<p:outputLabel value="Gesuchte Id: "/>
+			<p:inputText value="#{unicornService.id}"/>
+			<p:outputLabel value="#{unicornService.findById( unicornService.id )}" />
+			<p:commandButton action="login" value="--" />
+		</h:form>
+		</div>
+		
+	</ui:define>
+</ui:composition>

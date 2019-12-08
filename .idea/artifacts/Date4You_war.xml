@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Date4You:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Date4You</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="javaee-webapp.war">
+      <element id="artifact" artifact-name="Date4You:war exploded" />
+    </root>
+  </artifact>
+</component>

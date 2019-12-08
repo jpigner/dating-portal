@@ -1,0 +1,7 @@
+de.materna.unicorn.controller
+de.materna.unicorn.data
+de.materna.unicorn.model
+de.materna.unicorn.repository
+de.materna.unicorn.service
+de.materna.unicorn.utils
+de.materna.unicorn.view

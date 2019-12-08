@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<div class="container-fluid well"
+			style="width: 70rem; margin-top: 5rem;">
+
+			<!-- FORMULAR ZUR REGISTRIERUNG -->
+
+			<img class="mb-4 row"
+				style="width: 100%; height: auto; margin-left: 0.2rem;"
+				src="resources/img/frontend/banner.jpg" />
+
+			<!-- MELDUNG -->
+			<h2 class="display-2">Vertippt ? Dann versuche es nochmal.</h2>
+			<hr />
+
+			<!-- NAVIGATION ZUM LOGIN-->
+			<h:form class="text-center">
+
+				<div class="form-group row">
+					<p:outputLabel class="col-sm-2 col-form-label" value="Email" />
+					<div class="col-sm-10">
+						<p:inputText id="email" class="form-control"
+							value="#{profilController.email}" placeholder="Email" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<p:outputLabel class="col-sm-2 col-form-label" value="Password" />
+					<div class="col-sm-10">
+						<p:password id="password" class="form-control"
+							value="#{profilController.password}" placeholder="Password" />
+					</div>
+				</div>
+
+				<hr />
+
+				<p:commandButton action="#{profilController.login( )}"
+					class="lead btn btn-lg btn-primary btn-block" value="einloggen"
+					ajax="false" />
+			</h:form>
+
+			<!-- MELDUNG -->
+			<h2 class="display-2">Noch nicht registriert? Dann registriere
+				dich jetzt!</h2>
+
+			<hr />
+
+			<h:form>
+				<!-- EMAIL EINGABE -->
+				<div class="form-group row">
+					<p:outputLabel class="col-sm-2 col-form-label" value="Email" />
+					<div class="col-sm-10">
+						<p:inputText value="#{registerController.unicorn.email}"
+							class="form-control" placeholder="Bitte gib hier deine Email ein" />
+					</div>
+				</div>
+
+				<!-- PASSWORD EINGABE -->
+				<div class="form-group row">
+					<p:outputLabel class="col-sm-2 col-form-label" value="Password" />
+					<div class="col-sm-10">
+						<p:password value="#{registerController.unicorn.password}"
+							type="password" class="form-control"
+							placeholder="Bitte gib hier dein Passwort ein." />
+					</div>
+				</div>
+
+				<!-- NAME EINGABE -->
+				<div class="form-group row">
+					<p:outputLabel class="col-sm-2 col-form-label" value="Name" />
+					<div class="col-sm-10">
+						<p:inputText value="#{registerController.unicorn.name}"
+							placeholder="Bitte gib hier deinen Namen ein"
+							class="form-control" />
+					</div>
+				</div>
+
+				<!-- HORNLÄNGE EINGABE -->
+				<div class="form-group row">
+					<p:outputLabel class="col-sm-2 col-form-label" value="Hornlänge" />
+					<div class="col-sm-10">
+						<p:inputText value="#{registerController.unicorn.hornlenght}"
+							class="form-control"
+							placeholder="Bitte gib hier deine Hornlänge eingeben" />
+					</div>
+				</div>
+
+				<!-- GEBURTSDATUM EINGABE -->
+				<div class="form-group row">
+					<p:outputLabel class="col-sm-2 col-form-label" value="Geburststag" />
+					<div class="col-sm-10">
+
+						<p:inputText value="#{registerController.birthday}"
+							placeholder="Bitte gib dein Geburtstag ein" class="form-control">
+							<f:convertDateTime pattern="dd.MM.yyyy" type="date" />
+						</p:inputText>
+
+					</div>
+				</div>
+
+				<!-- BESCHREIBUNG EINGABE -->
+				<div class="form-group row">
+					<p:outputLabel class="col-sm-2 col-form-label" value="Beschreibung" />
+					<div class="col-sm-10">
+						<p:inputText value="#{registerController.unicorn.description}"
+							class="form-control" placeholder="Bitte beschreibe dich" />
+					</div>
+				</div>
+
+				<!-- FOTO EINGABE -->
+				<div class="form-group row">
+					<p:fileUpload
+						fileUploadListener="#{fileUploadView.handleFileUpload}"
+						mode="advanced" dragDropSupport="false" update="messages"
+						sizeLimit="100000000" fileLimit="3" allowTypes="/(\.|\/)(jpg)$/" />
+					<p:growl id="messages" showDetail="true" />
+				</div>
+
+
+				<hr />
+				<p:commandButton
+					action="#{registerController.register( fileUploadView.fileName )}"
+					class="lead btn btn-lg btn-primary btn-block" value="registrieren" ajax="false" />
+			</h:form>
+
+		</div>
+
+	</ui:define>
+</ui:composition>

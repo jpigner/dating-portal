@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<!-- GESAMT CONTAINER -->
+		<div class="container" style="margin-top: 5rem;">
+			<h:form>
+				<p:commandButton value="Suche" action="search" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Profil" action="profil" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Ausloggen"
+					action="#{profilController.logout}"
+					ajax="false" class="btn btn-primary btn-lg" />
+			</h:form>
+			<p></p>
+		
+			<!--  PROFIL GESAMT -->
+			<div class="row well">
+
+				<!-- PROFIL RECHTE SEITE-->
+				<!-- EIGENTÜMER OUTPUT -->
+				<h1 class="display-1" style="margin-left: 2%;">Profil von
+					#{dateController.unicorn.get().name}</h1>
+
+				<!-- PROFILBILD OUTPUT -->
+				<div class="col-md-4">
+					<img
+						src="resources/img/user/avatar/#{dateController.unicorn.get().fotoid}"
+						style="margin-top: 2rem;" class="img-thumbnail rounded float-left" />
+
+					<!-- NICKNAME OUTPUT -->
+					<p></p>
+					<p></p>
+					<h3 class="display-3" style="margin-bottom: 0.1rem;">Spitzname</h3>
+					<h4 class="display-4" style="margin-top: 0.1rem;">#{utils.getNickname(
+						dateController.unicorn.get() )}</h4>
+				</div>
+				<!-- PROFIL RECHTE SEITE ENDE -->
+
+				<!-- PROFIL LINKE SEITE -->
+				<!--  GEBURTSTAG OUTPUT -->
+				<div class="col-md-8">
+					<h3 class="display-3" style="margin-bottom: 0.1rem;">Geburtsdatum</h3>
+					<h4><h:outputText class="display-4" value="#{dateController.unicorn.get().birthdate}"
+					style="margin-top: 0.1rem;" /></h4>
+
+					<!--  HORNLÄNGE OUTPUT -->
+					<h3 class="display-3" style="margin-bottom: 0.1rem;">Hornlänge</h3>
+					<h4><h:outputText class="display-4" value="#{dateController.unicorn.get().hornlenght} meter" 
+					style="margin-top: 0.1rem;"/></h4>
+					
+					<!-- BESCHREIBUNG OUTPUT -->
+					<h3 class="display-3" style="margin-bottom: 0.1rem;">Beschreibung</h3>
+					<h4><h:outputText class="display-4" value="#{dateController.unicorn.get().description}" 
+					style="margin-top: 0.1rem;"/></h4>
+						
+					<h:outputText id="display" />
+
+				</div>
+			</div>
+			<!--  PROFIL LINKE SEITE ENDE -->
+		</div>
+
+	</ui:define>
+</ui:composition>

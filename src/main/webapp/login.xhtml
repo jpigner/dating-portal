@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+	
+		<div class="container-fluid" style="width: 70rem; margin-top: 5rem;">
+			<div class="card well" style="width: 55rem; margin-top: 5rem;">
+				<div class="card-body">
+					<h:form class="text-center">
+						<img class="mb-4" src="resources/img/frontend/banner.jpg" style="width: 50rem;" />
+	
+						<h2 class="h2 mb-3 font-weight-normal">Willkommen, logge dich
+							doch ein.</h2>
+						<hr />
+						<p:outputLabel class="lead" value="Email" />
+						<p:inputText id="email" class="form-control"
+							value="#{profilController.email}" />
+						
+						
+						<p:outputLabel class="lead" value="Password" style="margin-top: 1rem;"/>
+						<p:password id="password" class="form-control"
+							value="#{profilController.password}" />
+
+						<div class="checkbox mb-3">
+							<label> <input type="checkbox" value="remember-me" />
+								Erinnere dich an mich
+							</label>
+						</div>
+						
+						<hr />
+						
+						<p:commandButton action="#{profilController.login( )}"
+							class="lead btn btn-lg btn-primary btn-block" value="einloggen"
+							ajax="false" />
+						<p class="mt-5 mb-3 text-muted">Unicorns 2019</p>
+						<p class="mt-5 mb-3 text-muted"><a href="imprint.xhtml">Impressum</a></p>
+					</h:form>
+				</div>
+			</div>
+		</div>
+		
+	</ui:define>
+</ui:composition>

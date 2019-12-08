@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h:form>
+			<div class="p-2">
+				<div>
+					<p:commandButton action="#{registerController.registerAll()}"
+						class="lead" value="Datenbank erstellen" ajax="false" />
+				</div>
+			</div>
+			<div class="p-2">
+				<div>
+					Name<p:inputText value="#{registerController.unicorn.name}" />
+					Email<p:inputText value="#{registerController.unicorn.email}" />
+					Beschreibung<p:inputText value="#{registerController.unicorn.description}" />
+					Horn<p:inputText value="#{registerController.unicorn.hornlenght}" />
+					Password<p:inputText value="#{registerController.unicorn.password}" />
+					Geburtstag<p:inputText value="#{registerController.birthday}">
+					<f:convertDateTime pattern="dd.MM.yyyy" type="date"/>
+					</p:inputText>
+					
+					<p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                    update="messages" sizeLimit="100000000" fileLimit="3" allowTypes="/(\.|\/)(jpg)$/" /> 
+					<p:growl id="messages" showDetail="true" />     
+					
+					<p:commandButton action="#{registerController.register( fileUploadView.fileName )}"
+						class="lead" value="Benutzer registrieren" ajax="false" />
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

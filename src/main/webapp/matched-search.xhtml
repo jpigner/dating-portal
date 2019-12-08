@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<!-- GESAMT CONTAINER -->
+		<div class="container" style="margin-top: 5rem;">
+
+			<h:form>
+				<p:commandButton value="Profil" action="#{profilController.profil}"
+					ajax="false" class="btn btn-primary btn-lg" />
+				
+				<p:commandButton value="Alle Unicorns anzeigen" action="#{searchController.allUnicorns}"
+					ajax="false" class="btn btn-primary btn-lg" />
+				
+				<p:commandButton value="Ausloggen"
+					action="#{profilController.logout}" ajax="false"
+					class="btn btn-primary btn-lg" />
+			</h:form>
+			<p></p>
+
+			<!-- SUCHE FORM -->
+			<h:form id="form">
+
+				<hr />
+				<p>
+					<!-- ALTER -->
+					<p:outputLabel value="Nach Alter suchen : " />
+					<p:inputNumber label="Min" value="#{searchController.minAge}"
+						decimalPlaces="0" converter="javax.faces.Double" />
+					<p:inputNumber label="Max" value="#{searchController.maxAge}"
+						decimalPlaces="0" converter="javax.faces.Double" />
+
+					<!-- LÄNGE -->
+					<p:outputLabel value="Nach Länge suchen : " />
+					<p:inputNumber label="Min" decimalPlaces="0"
+						value="#{searchController.minLenght}" />
+					<p:inputNumber label="Max" decimalPlaces="0"
+						value="#{searchController.maxLenght}" />
+
+					<!-- SUBMIT DER SUCHE -->
+					<p:commandButton value="suchen"
+						action="#{searchController.filteredSearch}" ajax="false" />
+				</p>
+				<br />
+
+				<!-- DATAGRID FÜR DIE AUSGABE DER PROFILE -->
+				<p:dataGrid var="u" value="#{ matchedUnicorns }" columns="3" layout="grid"
+					rows="12" paginator="true" id="unicornsss"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="6,12,16">
+
+					<!-- HEADER -->
+					<f:facet name="header">
+            Unicorn for Date
+        </f:facet>
+
+					<p:panel header="#{u.name}" style="text-align:center">
+						<h:panelGrid columns="1" style="width:100%">
+
+							<!-- AUSGABE FÜR DIE EINZELNEN UNICORNS -->
+							<p:commandLink action="#{dateController.profil( u )}">
+
+								<!-- FOTO OUTPUT-->
+								<img src="resources/img/user/avatar/#{u.fotoid}" />
+							</p:commandLink>
+
+							<!-- NAME -->
+							<h:outputText value="Name: #{u.name}" />
+
+							<!-- ALTER -->
+							<h:outputText value="Alter: #{utils.getYears(u)}" />
+
+							<!-- LÄNGE -->
+							<h:outputText value="Hornlaenge: #{u.hornlenght} cm" />
+
+							<!-- SELEKTIERTES EINHORN FÜR DIE AUSGABE DES EINZELNEN PROFILS -->
+							<p:commandLink title="View Detail">
+								<h:outputText styleClass="pi pi-search" style="margin:0 auto;" />
+								<f:setPropertyActionListener value="#{u}"
+									target="#{ dateController.selectedUnicorn }" />
+							</p:commandLink>
+						</h:panelGrid>
+					</p:panel>
+				</p:dataGrid>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

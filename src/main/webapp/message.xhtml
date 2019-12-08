@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{ messageController.id }" />
+		</f:metadata>
+
+		<!-- GESAMT CONTAINER -->
+		<div class="container" style="margin-top: 5rem;">
+			<h:form rendered="#{ !messageController.allMessages }">
+				<p:commandButton value="Suche" action="search" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Alle Nachrichten sehen"
+					action="#{ messageController.seeAllMessages }" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Profil" action="profil" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Ausloggen"
+					action="#{profilController.logout}" ajax="false"
+					class="btn btn-primary btn-lg" />
+			</h:form>
+
+			<h:form rendered="#{ messageController.allMessages }">
+				<p:commandButton value="Suche" action="search" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Letzten 10 Nachrichten sehen"
+					action="#{ messageController.seeLastMessages}" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Profil" action="profil" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Ausloggen"
+					action="#{profilController.logout}" ajax="false"
+					class="btn btn-primary btn-lg" />
+			</h:form>
+
+			<!--  NACHRICHTEN GESAMT -->
+			<div class="row well">
+
+				<!-- NACHRICHTEN -->
+				<h:form rendered="#{ !messageController.allMessages }">
+					<!-- NACHRICHTEN RECHTE SEITE-->
+					<!-- EIGENTÜMER OUTPUT -->
+					<h1 class="display-1">Deine letzten 10 Nachrichten</h1>
+
+					<ui:repeat id="lastTenMessages"
+						value="#{ utils.getMyMessages( messages, profilController.unicorn.get() )}"
+						var="list"
+						offset="#{ utils.getMyMessages( messages, profilController.unicorn.get() ).size() - 10 }">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+								<div class="card" style="width: 65rem;">
+									<img
+										src="resources/img/user/avatar/#{ utils.getDateUnicorn( unicorns, list.senderId ).fotoid }"
+										class="card-img-center" />
+									<div class="card-body">
+										<h5 class="card-title">Nachricht von: #{
+											utils.getDateUnicorn( unicorns, list.senderId ).name }</h5>
+										<p class="card-text">#{list.message}</p>
+									</div>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item">Erhalten am: #{list.date}</li>
+									</ul>
+									<div class="card-body">
+										<p:commandButton
+											value="Gehe zum Unicorn Profil und schreibe eine Nachricht"
+											action="#{dateController.profil( utils.getDateUnicorn( unicorns, list.senderId ) )}"
+											ajax="false" class="btn btn-primary btn-lg" />
+										<p:commandButton value="Nachricht löschen"
+											action="#{ messageController.deleteMessage( utils.getSpecifiedMessage( messages, profilController.unicorn.get(), list.id) ) }" ajax="false"
+											class="btn btn-primary btn-lg">
+										</p:commandButton>
+									</div>
+								</div>
+							</li>
+						</ul>
+						<hr />
+					</ui:repeat>
+
+				</h:form>
+
+				<h:form rendered="#{ messageController.allMessages }">
+					<!-- NACHRICHTEN RECHTE SEITE-->
+					<!-- EIGENTÜMER OUTPUT -->
+					<h1 class="display-1">Alle deine Nachrichten</h1>
+					<ui:repeat
+						value="#{ utils.getMyMessages( messages, profilController.unicorn.get() )}"
+						var="list">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+								<div class="card" style="width: 65rem;">
+									<img
+										src="resources/img/user/avatar/#{ utils.getDateUnicorn( unicorns, list.senderId ).fotoid }"
+										class="card-img-center" />
+									<div class="card-body">
+										<h5 class="card-title">Nachricht von: #{
+											utils.getDateUnicorn( unicorns, list.senderId ).name }</h5>
+										<p class="card-text">#{list.message}</p>
+									</div>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item">Erhalten am: #{list.date}</li>
+									</ul>
+									<div class="card-body">
+										<p:commandButton
+											value="Gehe zum Unicorn Profil und schreibe eine Nachricht"
+											action="#{ dateController.profil( utils.getDateUnicorn( unicorns, list.senderId ) ) }"
+											ajax="false" class="btn btn-primary btn-lg" />
+										<p:commandButton value="Nachricht löschen"
+											action="#{ messageController.deleteMessage( utils.getSpecifiedMessage( messages, profilController.unicorn.get() , list.id) ) }" ajax="false"
+											class="btn btn-primary btn-lg" />
+									</div>
+								</div>
+							</li>
+						</ul>
+						<hr />
+					</ui:repeat>
+
+				</h:form>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

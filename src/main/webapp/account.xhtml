@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<!-- GESAMT CONTAINER -->
+		<div class="container" style="margin-top: 5rem;">
+			<!-- BEGRÜSSUNG -->
+			<h1 class="display-1">Willkommen
+				#{profilController.unicorn.get().name}!</h1>
+
+			<h:form>
+				<p:commandButton value="Suche" action="search" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Nachrichten" action="message" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Profil" action="profil" ajax="false"
+					class="btn btn-primary btn-lg" />
+
+				<p:commandButton value="Ausloggen"
+					action="#{profilController.logout}" ajax="false"
+					class="btn btn-primary btn-lg" />
+			</h:form>
+			<p></p>
+
+			<!--  PROFIL GESAMT -->
+			<div class="row well">
+
+				<!-- PROFIL RECHTE SEITE-->
+				<!-- EIGENTÜMER OUTPUT -->
+				<h1 class="display-1" style="margin-left: 2%;">Account von
+					#{profilController.unicorn.get().name}</h1>
+
+				<!-- PROFILBILD OUTPUT -->
+				<div class="col-md-4">
+					<div class="form-group row">
+						<img
+							src="resources/img/user/avatar/#{profilController.unicorn.get().fotoid}"
+							style="margin-top: 2rem;"
+							class="img-thumbnail rounded float-left" />
+					</div>
+				</div>
+				<!-- PROFIL RECHTE SEITE ENDE -->
+
+				<!-- PROFIL LINKE SEITE -->
+				<div class="col-md-8">
+					<!-- UEBERSCHRIFT -->
+					<h1 class="display-1">Deine Daten ändern</h1>
+
+					<!-- NICKNAME OUTPUT -->
+					<h:form>
+						<h3 class="display-3">Dein Spitzname</h3>
+						<p:inputText id="nickname" class="lead"
+							value="#{ profilController.unicorn.get().nickname }">
+							<p:ajax event="valueChange"
+								listener="#{ updateController.updateNickname( profilController.unicorn.get() ) }" />
+							<f:validateRegex
+								pattern="[^0-9]*" />
+						</p:inputText>
+						<p:message for="nickname" />
+					</h:form>
+
+					<!--  EMAIL OUTPUT -->
+					<h:form>
+						<h3 class="display-3">Email</h3>
+						<p:inputText id="email" class="lead"
+							value="#{profilController.unicorn.get().email}">
+							<p:ajax event="keyup"
+								listener="#{ updateController.updateEmail( profilController.unicorn.get() )}" />
+						</p:inputText>
+					</h:form>
+					
+					<!--  PASSWORD OUTPUT -->
+					<h:form>
+						<h3 class="display-3">Password</h3>
+						<p:password id="password" class="lead"
+							value="#{ profilController.unicorn.get().password }"
+							placeholder="******">
+							<p:ajax event="keyup"
+								listener="#{ updateController.updatePassword( profilController.unicorn.get(), profilController.unicorn.get() )}" />
+						</p:password>
+					</h:form>
+					
+					<!--  NAME OUTPUT -->
+					<h:form>
+						<h3 class="display-3">Name</h3>
+						<p:inputText id="name" class="lead"
+							value="#{profilController.unicorn.get().name}">
+							<p:ajax event="keyup"
+								listener="#{ updateController.updateName( profilController.unicorn.get() )}" />
+						</p:inputText>
+					</h:form>
+
+					<!--  GEBURTSTAG OUTPUT -->
+					<h3 class="display-3">Geburtsdatum</h3>
+					<!--  TAGE -->
+					<h:form>
+						<p:selectOneMenu value="#{ updateController.day }">
+							<p:ajax event="valueChange"
+								listener="#{ updateController.updateDayOfBirthday( profilController.unicorn.get()) }" />
+							<f:selectItem
+								itemLabel="#{profilController.unicorn.get().birthdate.dayOfMonth}"
+								itemValue="#{profilController.unicorn.get().birthdate.dayOfMonth}" />
+							<f:selectItems value="#{utils.days}">
+							</f:selectItems>
+						</p:selectOneMenu>
+
+						<!-- MONATE -->
+						<p:selectOneMenu value="#{ updateController.month }">
+							<p:ajax event="valueChange"
+								listener="#{ updateController.updateMonthOfBirthday( profilController.unicorn.get() ) }" />
+							<f:selectItem
+								itemLabel="#{ profilController.unicorn.get().birthdate.monthValue }"
+								itemValue="#{ profilController.unicorn.get().birthdate.monthValue }" />
+							<f:selectItems value="#{ utils.months }">
+							</f:selectItems>
+						</p:selectOneMenu>
+
+						<!-- JAHRE -->
+						<p:selectOneMenu value="#{ updateController.year }">
+							<p:ajax event="valueChange"
+								listener="#{ updateController.updateYearOfBirthday( profilController.unicorn.get() ) }" />
+							<f:selectItem
+								itemLabel="#{ profilController.unicorn.get().birthdate.year }"
+								itemValue="#{ profilController.unicorn.get().birthdate.year }" />
+							<f:selectItems value="#{utils.years}">
+							</f:selectItems>
+						</p:selectOneMenu>
+					</h:form>
+
+					<!--  HORNLÄNGE OUTPUT -->
+					<h:form>
+						<h3 class="display-3">Hornlänge</h3>
+						<p:inputNumber label="" class="lead"
+							value="#{ profilController.unicorn.get().hornlenght }">
+							<p:ajax event="keyup"
+								listener="#{ updateController.updateHornLength( profilController.unicorn.get() ) }" />
+						</p:inputNumber>
+					</h:form>
+
+					<!-- BESCHREIBUNG OUTPUT -->
+					<h:form>
+						<h3 class="display-3">Beschreibung</h3>
+						<p:inputTextarea
+							value="#{ profilController.unicorn.get().description }" rows="5"
+							cols="100" counter="display" maxlength="10000"
+							counterTemplate="{0} characters remaining." autoResize="false">
+							<p:ajax event="keyup"
+								listener="#{ updateController.updateDescription( profilController.unicorn.get() ) }" />
+						</p:inputTextarea>
+						<br />
+						<h:outputText id="display" />
+					</h:form>
+
+					<!-- NEUES BILD HOCHLADEN -->
+					<h:form>
+						<h3 class="display-3">Neues Bild hochladen</h3>
+						<p:fileUpload
+							fileUploadListener="#{ profilController.handleFileUpload }"
+							mode="advanced" dragDropSupport="false" update="messages"
+							sizeLimit="100000000" fileLimit="1" allowTypes="/(\.|\/)(jpg)$/"
+							class="btn-block" />
+						<p:growl id="messages" showDetail="true" />
+					</h:form>
+				</div>
+			</div>
+			<!--  PROFIL LINKE SEITE ENDE -->
+		</div>
+
+	</ui:define>
+</ui:composition>
